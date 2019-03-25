@@ -7,10 +7,10 @@ before_script:
 script:
   - go build application.go
   - go test ./... -cover -v
-  - docker build -t template_go .
-  - docker run -d -p 8080:8080 --name template_go_container template_go
+  - docker build -t currency .
+  - docker run -d -p 8080:8080 --name template_go_container currency
   - curl http://127.0.0.1:8080/v1/hello_world/1
   - docker stop template_go_container
   - docker rm template_go_container
-  - docker rmi template_go
+  - docker rmi currency
 
