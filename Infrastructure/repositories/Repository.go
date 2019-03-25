@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"github.com/apmath-web/template-go/Domain"
+	"github.com/apmath-web/currency/Domain"
 )
 
 type Repository struct {

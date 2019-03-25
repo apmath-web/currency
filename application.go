@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/apmath-web/template-go/Application/routing"
-	"github.com/apmath-web/template-go/Infrastructure/applicationModels"
-	"github.com/apmath-web/template-go/Infrastructure/repositories"
+	"github.com/apmath-web/currency/Application/routing"
+	"github.com/apmath-web/currency/Infrastructure/applicationModels"
+	"github.com/apmath-web/currency/Infrastructure/repositories"
 	"log"
 )
 

@@ -1,8 +1,8 @@
 package actions
 
 import (
-	"github.com/apmath-web/template-go/Application/viewModels"
-	"github.com/apmath-web/template-go/Infrastructure/repositories"
+	"github.com/apmath-web/currency/Application/viewModels"
+	"github.com/apmath-web/currency/Infrastructure/repositories"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"

@@ -1,6 +1,6 @@
 package applicationModels
 
-import "github.com/apmath-web/template-go/Domain"
+import "github.com/apmath-web/currency/Domain"
 
 type HelloWorld struct {
 	Message string `json:"message"`
