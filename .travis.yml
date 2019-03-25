@@ -1,0 +1,16 @@
+language:
+  - go
+go:
+  - "1.11.x"
+before_script:
+  - go get -v github.com/gin-gonic/gin
+script:
+  - go build application.go
+  - go test ./... -cover -v
+  - docker build -t currency .
+  - docker run -d -p 8080:8080 --name currency_container currency
+  - curl http://127.0.0.1:8080/v1/hello_world/1
+  - docker stop currency_container
+  - docker rm currency_container
+  - docker rmi currency
+
