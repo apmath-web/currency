@@ -34,3 +34,15 @@ func (c *CurrencyViewModel) UnmarshalJSON(b []byte) error {
 	}
 	return nil
 }
+
+func (c *CurrencyViewModel) Hydrate(model interface{}) {
+
+}
+
+func (c *CurrencyViewModel) Validate() bool {
+	return true
+}
+
+func (c *CurrencyViewModel) GetValidation() interface{} {
+	return &c.validation
+}
