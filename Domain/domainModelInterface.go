@@ -10,6 +10,11 @@ type CurrencyRate interface {
 	GetRate() int
 }
 
+type CurrencyChange interface {
+	GetCurrency()
+	GetAmount()
+}
+
 type ChangeTable interface {
 	GetCurrencyRate() []CurrencyRate
 }

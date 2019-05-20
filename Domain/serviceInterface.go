@@ -5,7 +5,7 @@ type UpdaterTable interface {
 }
 
 type CurrencyChanger interface {
-	Change(curCurrency Currency, wanCurrency Currency) int
+	Change(curCurrency Currency, wanCurrency Currency) CurrencyChange
 }
 
 type ChangeTableServiceInterface interface {
