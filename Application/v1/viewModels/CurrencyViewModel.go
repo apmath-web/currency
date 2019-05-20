@@ -1,12 +1,15 @@
 package viewModels
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"github.com/apmath-web/currency/Domain"
+)
 
 type CurrencyViewModel struct {
 	Amount          int    `json:"amount"`
 	CurrentCurrency string `json:"currentCurrency"`
 	WantedCurrency  string `json:"wantedCurrency"`
-	validation      interface{}
+	validation      Domain.ValidationInterface
 }
 
 func (c *CurrencyViewModel) GetAmount() int {
@@ -35,7 +38,7 @@ func (c *CurrencyViewModel) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-func (c *CurrencyViewModel) Hydrate(model interface{}) {
+func (c *CurrencyViewModel) Hydrate(model Domain.CurrencyChange) {
 
 }
 
@@ -43,6 +46,6 @@ func (c *CurrencyViewModel) Validate() bool {
 	return true
 }
 
-func (c *CurrencyViewModel) GetValidation() interface{} {
-	return &c.validation
+func (c *CurrencyViewModel) GetValidation() Domain.ValidationInterface {
+	return c.validation
 }
