@@ -11,8 +11,8 @@ type CurrencyRate interface {
 }
 
 type CurrencyChange interface {
-	GetCurrency()
-	GetAmount()
+	GetCurrency() Currency
+	GetAmount() int
 }
 
 type ChangeTable interface {
