@@ -1,7 +1,7 @@
 package Domain
 
-type CurrencyRateRepositoryInterface interface {
-	GetCurrencyRate(curCurrency Currency, wanCurrency Currency) CurrencyRate
-	SetCurrencyRate(rate CurrencyRate) error
-	UpdateCurrencyRate(rate CurrencyRate) error
+type ChangeTableRepositoryInterface interface {
+	SetAllTable(table ChangeTable) error
+	GetAllTable() ChangeTable
+	ClearAllTable() error
 }
