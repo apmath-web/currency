@@ -5,11 +5,16 @@ import (
 	"github.com/apmath-web/currency/Domain"
 )
 
-type CurrencyViewModel struct {
+type JsonCurrency struct {
 	Amount          int    `json:"amount"`
 	CurrentCurrency string `json:"currentCurrency"`
 	WantedCurrency  string `json:"wantedCurrency"`
-	validation      Domain.ValidationInterface
+}
+
+type CurrencyViewModel struct {
+	JsonCurrency
+	// later use hear realisation not interface
+	validation Domain.ValidationInterface
 }
 
 func (c *CurrencyViewModel) GetAmount() int {
@@ -32,9 +37,11 @@ func (c *CurrencyViewModel) MarshalJSON() (b []byte, e error) {
 }
 
 func (c *CurrencyViewModel) UnmarshalJSON(b []byte) error {
-	if err := json.Unmarshal(b, &c); err != nil {
+	tmpModel := JsonCurrency{}
+	if err := json.Unmarshal(b, &tmpModel); err != nil {
 		return err
 	}
+	c.JsonCurrency = tmpModel
 	return nil
 }
 
