@@ -46,8 +46,8 @@ func (c *CurrencyViewModel) validateAmount() bool{
 }
 
 func (c *CurrencyViewModel) validateCurrentCurrency() bool {
-	for i, cc := range Domain.Currencies {
-		if cc == Domain.Currencies[i]{
+	for _, cc := range Domain.Currencies {
+		if cc == c.CurrentCurrency {
 			return true
 		}
 	}
@@ -56,8 +56,8 @@ func (c *CurrencyViewModel) validateCurrentCurrency() bool {
 }
 
 func (c *CurrencyViewModel) validateWantedCurrency() bool {
-	for i, cc := range Domain.Currencies {
-		if cc == Domain.Currencies[i]{
+	for _, cc := range Domain.Currencies {
+		if cc == c.CurrentCurrency {
 			return true
 		}
 	}
