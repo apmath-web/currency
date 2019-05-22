@@ -2,6 +2,7 @@ package viewModels
 
 import (
 	"encoding/json"
+	"github.com/apmath-web/currency/Application/v1/validation"
 	"github.com/apmath-web/currency/Domain"
 )
 
@@ -14,7 +15,7 @@ type JsonCurrency struct {
 type CurrencyViewModel struct {
 	JsonCurrency
 	// later use hear realisation not interface
-	validation Domain.ValidationInterface
+	validation validation.Validation
 }
 
 func (c *CurrencyViewModel) GetAmount() int {
@@ -36,6 +37,34 @@ func (c *CurrencyViewModel) MarshalJSON() (b []byte, e error) {
 	})
 }
 
+func (c *CurrencyViewModel) validateAmount() bool{
+	if c.Amount < 0 {
+		c.validation.AddMessage(validation.GenMessage("amount", "Is negative"))
+		return false
+	}
+	return true
+}
+
+func (c *CurrencyViewModel) validateCurrentCurrency() bool {
+	for i, cc := range Domain.Currencies {
+		if cc == Domain.Currencies[i]{
+			return true
+		}
+	}
+	c.validation.AddMessage(validation.GenMessage("CurrentCurrency", "Is incorrect"))
+	return false
+}
+
+func (c *CurrencyViewModel) validateWantedCurrency() bool {
+	for i, cc := range Domain.Currencies {
+		if cc == Domain.Currencies[i]{
+			return true
+		}
+	}
+	c.validation.AddMessage(validation.GenMessage("WantedCurrency", "Is incorrect"))
+	return false
+}
+
 func (c *CurrencyViewModel) UnmarshalJSON(b []byte) error {
 	tmpModel := JsonCurrency{}
 	if err := json.Unmarshal(b, &tmpModel); err != nil {
@@ -46,13 +75,18 @@ func (c *CurrencyViewModel) UnmarshalJSON(b []byte) error {
 }
 
 func (c *CurrencyViewModel) Hydrate(model Domain.CurrencyChange) {
-
+	c.Amount = model.GetAmount()
+	c.CurrentCurrency = model.GetCurrency().GetName()
+	c.WantedCurrency = model.GetCurrency().GetName()
 }
 
 func (c *CurrencyViewModel) Validate() bool {
-	return true
+	if c.validateAmount() && c.validateCurrentCurrency() && c.validateWantedCurrency() {
+		return true
+	}
+	return false
 }
 
 func (c *CurrencyViewModel) GetValidation() Domain.ValidationInterface {
-	return c.validation
+	return &c.validation
 }
