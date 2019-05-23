@@ -7,7 +7,7 @@ type Currency interface {
 type CurrencyRate interface {
 	GetCurrentCurrency() Currency
 	GetWantedCurrency() Currency
-	GetRate() int
+	GetRate() float64
 }
 
 type CurrencyChange interface {
@@ -16,5 +16,5 @@ type CurrencyChange interface {
 }
 
 type ChangeTable interface {
-	GetCurrencyRate() []CurrencyRate
+	GetCurrencyRates() []CurrencyRate
 }
