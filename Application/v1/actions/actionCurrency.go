@@ -25,4 +25,6 @@ func CurrencyHandler(c *gin.Context) {
 		c.String(http.StatusBadRequest, string(str))
 		return
 	}
+	// todo: rewrite this mock for buisnes logic
+	c.JSON(http.StatusCreated, gin.H{"amount": 177, "currency": "EUR"})
 }
