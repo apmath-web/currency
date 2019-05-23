@@ -14,7 +14,6 @@ type JsonCurrency struct {
 
 type CurrencyViewModel struct {
 	JsonCurrency
-	// later use hear realisation not interface
 	validation validation.Validation
 }
 
@@ -37,7 +36,7 @@ func (c *CurrencyViewModel) MarshalJSON() (b []byte, e error) {
 	})
 }
 
-func (c *CurrencyViewModel) validateAmount() bool{
+func (c *CurrencyViewModel) validateAmount() bool {
 	if c.Amount < 0 {
 		c.validation.AddMessage(validation.GenMessage("amount", "Is negative"))
 		return false
