@@ -5,7 +5,7 @@ type Currency interface {
 }
 
 type CurrencyRate interface {
-	GetCurrentCurrency() Currency
+	GetBasedCurrency() Currency
 	GetWantedCurrency() Currency
 	GetRate() float64
 }

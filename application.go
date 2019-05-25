@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/apmath-web/currency/Application/v1/routing"
 	"log"
+
+	"github.com/apmath-web/currency/Application/v1/routing"
 )
 
 func main() {
