@@ -7,3 +7,9 @@ type CurrencyModel struct {
 func (i CurrencyModel) GetName() string {
 	return i.name
 }
+
+func GenCurrencyDomainModel(name string) CurrencyModel {
+	return CurrencyModel{
+		name,
+	}
+}

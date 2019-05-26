@@ -54,5 +54,11 @@ func (i CurrencyRateModel) GetRate() float64 {
 	}
 
 	return data.Rates.rate
+}
 
+func GenCurrencyRateDomainModel(bCurrency Domain.Currency, wCurrency Domain.Currency) CurrencyRateModel {
+	return CurrencyRateModel{
+		bCurrency,
+		wCurrency,
+	}
 }
