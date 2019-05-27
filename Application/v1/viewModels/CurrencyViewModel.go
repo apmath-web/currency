@@ -21,12 +21,12 @@ func (c *CurrencyViewModel) GetAmount() int {
 	return c.Amount
 }
 
-func (c *CurrencyViewModel) GetCurrentCurrency() int {
-	return c.Amount
+func (c *CurrencyViewModel) GetCurrentCurrency() string {
+	return c.CurrentCurrency
 }
 
-func (c *CurrencyViewModel) GetWantedCurrency() int {
-	return c.Amount
+func (c *CurrencyViewModel) GetWantedCurrency() string {
+	return c.WantedCurrency
 }
 
 func (c *CurrencyViewModel) MarshalJSON() (b []byte, e error) {
