@@ -6,6 +6,7 @@ import (
 
 type Repository struct {
 	currentRates Domain.ChangeTable
+	currentRatesOfTwo Domain.CurrencyRate
 }
 
 func (repository *Repository) SetAllTable(table Domain.ChangeTable) error {
