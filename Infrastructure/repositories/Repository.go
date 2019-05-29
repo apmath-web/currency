@@ -24,10 +24,10 @@ func (repository *Repository) ClearAllTable() error {
 
 func (repository *Repository) GetRate(currentCurrency string, wantedCurrency string) Domain.CurrencyRate {
 	table := repository.GetAllTable()
-	currencies := table.GetCurrencyRate()
+	currencies := table.GetCurrencyRates()
 	currencyRate := currencies[0]
 	for _, cRate := range currencies {
-		if cRate.GetCurrentCurrency().GetName() == currentCurrency &&
+		if cRate.GetBasedCurrency().GetName() == currentCurrency &&
 			cRate.GetWantedCurrency().GetName() == wantedCurrency {
 			currencyRate = cRate
 			break
