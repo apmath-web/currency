@@ -18,3 +18,4 @@ func (ccs* CurrencyChangerService) CurrencyChanger(baseCurrency string, wantedCu
 	rate := ccs.changeTable.GetRate(baseCurrency, wantedCurrency).GetRate()
 	return amount * rate
 }
+
