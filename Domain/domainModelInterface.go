@@ -12,7 +12,7 @@ type CurrencyRate interface {
 
 type CurrencyChange interface {
 	GetCurrency() Currency
-	GetAmount() int
+	GetAmount() float64
 }
 
 type ChangeTable interface {
