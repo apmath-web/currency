@@ -2,9 +2,9 @@ package services
 
 import (
 	"github.com/apmath-web/currency/Domain"
-	"github.com/apmath-web/currency/Domain/domainModels"
-
+	domainModels "github.com/apmath-web/currency/Domain/Models"
 	infrastructure "github.com/apmath-web/currency/Infrastructure"
+	"github.com/apmath-web/currency/Infrastructure/applicationModels"
 )
 
 type UpdaterTableModel struct {
@@ -22,8 +22,12 @@ func (i UpdaterTableModel) Update(curTable Domain.ChangeTable) (Domain.ChangeTab
 
 		curRates[ind] = domainModels.GenCurrencyRateDomainModel(baseCurrency, wantedCurrency, actualeRate)
 	}
+
+	return domainModels.GenChangeTableDomainModel(curRates), nil
 }
 
 func GenUpdaterTableDomainModel() Domain.UpdaterTable {
-	return UpdaterTableModel{}
+	return UpdaterTableModel{
+		applicationModels.GenFetcherApplicationModel(),
+	}
 }

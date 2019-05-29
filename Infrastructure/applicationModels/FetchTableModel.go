@@ -46,6 +46,6 @@ func (i FetcherModel) FetchRate(baseCurrency string, wantedCurrency string) floa
 	return data.Rates.Rate
 }
 
-func GenFetcherApplicationModels() infrastructure.Fetcher {
+func GenFetcherApplicationModel() infrastructure.Fetcher {
 	return FetcherModel{}
 }
