@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	infrastructure "github.com/apmath-web/currency/Infrastructure"
+	"github.com/apmath-web/currency/Domain"
 )
 
 type FetcherModel struct{}
@@ -46,6 +46,6 @@ func (i FetcherModel) FetchRate(baseCurrency string, wantedCurrency string) floa
 	return data.Rates.Rate
 }
 
-func GenFetcherApplicationModel() infrastructure.Fetcher {
+func GenFetcherApplicationModel() Domain.Fetcher {
 	return FetcherModel{}
 }

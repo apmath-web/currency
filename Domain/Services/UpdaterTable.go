@@ -3,12 +3,11 @@ package services
 import (
 	"github.com/apmath-web/currency/Domain"
 	domainModels "github.com/apmath-web/currency/Domain/Models"
-	infrastructure "github.com/apmath-web/currency/Infrastructure"
 	"github.com/apmath-web/currency/Infrastructure/applicationModels"
 )
 
 type UpdaterTableModel struct {
-	fetcher infrastructure.Fetcher
+	fetcher Domain.Fetcher
 }
 
 func (i UpdaterTableModel) Update(curTable Domain.ChangeTable) (Domain.ChangeTable, error) {
