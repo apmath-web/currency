@@ -12,12 +12,13 @@ import (
 
 type FetcherModel struct{}
 
-func (i FetcherModel) FetchRate(baseCurrency string, wantedCurrency string) float64 {
+func (i *FetcherModel) FetchRate(baseCurrency string, wantedCurrency string) (float64, error) {
 	url := Infrastructure.ApiUrl + wantedCurrency + "&base=" + baseCurrency
 
 	res, err := http.Get(url)
 
 	if err != nil {
+		return -1, err
 		log.Fatal(err)
 	}
 
@@ -44,9 +45,9 @@ func (i FetcherModel) FetchRate(baseCurrency string, wantedCurrency string) floa
 		log.Fatal(errOfUnmurshal)
 	}
 
-	return data.Rates.Rate
+	return data.Rates.Rate, nil
 }
 
 func GenFetcherApplicationModel() Domain.Fetcher {
-	return FetcherModel{}
+	return &FetcherModel{}
 }

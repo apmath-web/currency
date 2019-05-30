@@ -20,5 +20,5 @@ type ChangeTable interface {
 }
 
 type Fetcher interface {
-	FetchRate(baseCurrency string, wantedCurrency string) float64
+	FetchRate(baseCurrency string, wantedCurrency string) (float64, error)
 }
