@@ -1,4 +1,4 @@
-package services
+package Services
 
 import (
 	"github.com/apmath-web/currency/Domain"
