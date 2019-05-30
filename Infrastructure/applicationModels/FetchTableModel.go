@@ -7,12 +7,13 @@ import (
 	"net/http"
 
 	"github.com/apmath-web/currency/Domain"
+	"github.com/apmath-web/currency/Infrastructure"
 )
 
 type FetcherModel struct{}
 
 func (i FetcherModel) FetchRate(baseCurrency string, wantedCurrency string) float64 {
-	url := "https://api.exchangeratesapi.io/latest?symbols=" + wantedCurrency + "&base=" + baseCurrency
+	url := Infrastructure.ApiUrl + wantedCurrency + "&base=" + baseCurrency
 
 	res, err := http.Get(url)
 
