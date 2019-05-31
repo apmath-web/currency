@@ -4,7 +4,7 @@ type CurrencyModel struct {
 	name string
 }
 
-func (i CurrencyModel) GetName() string {
+func (i *CurrencyModel) GetName() string {
 	return i.name
 }
 

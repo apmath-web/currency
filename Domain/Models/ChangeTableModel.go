@@ -8,7 +8,7 @@ type ChangeTable struct {
 	currencyRates []Domain.CurrencyRate
 }
 
-func (i ChangeTable) GetCurrencyRates() []Domain.CurrencyRate {
+func (i *ChangeTable) GetCurrencyRates() []Domain.CurrencyRate {
 	return i.currencyRates
 }
 

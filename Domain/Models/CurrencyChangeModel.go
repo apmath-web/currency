@@ -7,11 +7,11 @@ type CurrencyChangeModel struct {
 	amount   int
 }
 
-func (i CurrencyChangeModel) GetCurrency() Domain.Currency {
+func (i *CurrencyChangeModel) GetCurrency() Domain.Currency {
 	return i.currency
 }
 
-func (i CurrencyChangeModel) GetAmount() int {
+func (i *CurrencyChangeModel) GetAmount() int {
 	return i.amount
 }
 

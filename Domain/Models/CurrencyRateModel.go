@@ -10,15 +10,15 @@ type CurrencyRateModel struct {
 	Rate           int
 }
 
-func (i CurrencyRateModel) GetBasedCurrency() Domain.Currency {
+func (i *CurrencyRateModel) GetBasedCurrency() Domain.Currency {
 	return i.basedCurrency
 }
 
-func (i CurrencyRateModel) GetWantedCurrency() Domain.Currency {
+func (i *CurrencyRateModel) GetWantedCurrency() Domain.Currency {
 	return i.wantedCurrency
 }
 
-func (i CurrencyRateModel) GetRate() int {
+func (i *CurrencyRateModel) GetRate() int {
 	return i.Rate
 }
 
