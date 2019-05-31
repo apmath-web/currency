@@ -2,13 +2,18 @@ package actions
 
 import (
 	"encoding/json"
+	"net/http"
+
 	"github.com/apmath-web/currency/Application/v1/validation"
 	"github.com/apmath-web/currency/Application/v1/viewModels"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func CurrencyHandler(c *gin.Context) {
+	// currentCurrency, err := strconv.Atoi(c.Param("currentCurrency"))
+	// wantedCurrency, err := strconv.Atoi(c.Param("wantedCurrency"))
+	// amount := c.Param("amount")
+
 	vm := viewModels.CurrencyViewModel{}
 	if err := c.BindJSON(&vm); err != nil {
 		validator := validation.GenValidation()
@@ -25,6 +30,8 @@ func CurrencyHandler(c *gin.Context) {
 		c.String(http.StatusBadRequest, string(str))
 		return
 	}
-	// todo: rewrite this mock for buisnes logic
+
+	// dm := mapper.CurrencyMapper(vm)
+
 	c.JSON(http.StatusCreated, gin.H{"amount": 177, "currency": "EUR"})
 }
