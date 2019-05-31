@@ -4,8 +4,8 @@ type UpdaterTable interface {
 	Update(currentTable ChangeTable) (ChangeTable, error)
 }
 
-type CurrencyChanger interface {
-	Change(wantToChange CurrencyChange, wantedCurrency Currency) CurrencyChange
+type CurrencyChangerInterface interface {
+	Change(curCurrency Currency, wanCurrency Currency, Amount float64) float64
 }
 
 type ChangeTableServiceInterface interface {
