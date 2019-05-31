@@ -12,9 +12,9 @@ type UpdaterTableModel struct {
 	fetcher Domain.Fetcher
 }
 
-func (i *UpdaterTableModel) Update(curTable Domain.ChangeTable) (Domain.ChangeTable, error) {
-	curRates := curTable.GetCurrencyRates()
-	for ind, rate := range curRates {
+func (i *UpdaterTableModel) Update(currentTable Domain.ChangeTable) (Domain.ChangeTable, error) {
+	currentRates := currentTable.GetCurrencyRates()
+	for ind, rate := range currentRates {
 		wantedCurrency := rate.GetWantedCurrency()
 		baseCurrency := rate.GetBasedCurrency()
 		wantedCurrencyName := wantedCurrency.GetName()
@@ -24,10 +24,10 @@ func (i *UpdaterTableModel) Update(curTable Domain.ChangeTable) (Domain.ChangeTa
 		if err != nil {
 			log.Fatal(err)
 		}
-		curRates[ind] = domainModels.GenCurrencyRateDomainModel(baseCurrency, wantedCurrency, actualeRate)
+		currentRates[ind] = domainModels.GenCurrencyRateDomainModel(baseCurrency, wantedCurrency, actualeRate)
 	}
 
-	return domainModels.GenChangeTableDomainModel(curRates), nil
+	return domainModels.GenChangeTableDomainModel(currentRates), nil
 }
 
 func GenUpdaterTableDomainModel() Domain.UpdaterTable {

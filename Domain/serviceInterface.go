@@ -1,7 +1,7 @@
 package Domain
 
 type UpdaterTable interface {
-	Update(curTable ChangeTable) (ChangeTable, error)
+	Update(currentTable ChangeTable) (ChangeTable, error)
 }
 
 type CurrencyChanger interface {
