@@ -7,7 +7,7 @@ import (
 type CurrencyRateModel struct {
 	basedCurrency  Domain.Currency
 	wantedCurrency Domain.Currency
-	Rate           float64
+	Rate           int
 }
 
 func (i CurrencyRateModel) GetBasedCurrency() Domain.Currency {
@@ -18,11 +18,11 @@ func (i CurrencyRateModel) GetWantedCurrency() Domain.Currency {
 	return i.wantedCurrency
 }
 
-func (i CurrencyRateModel) GetRate() float64 {
+func (i CurrencyRateModel) GetRate() int {
 	return i.Rate
 }
 
-func GenCurrencyRateDomainModel(bCurrency Domain.Currency, wCurrency Domain.Currency, rate float64) CurrencyRateModel {
+func GenCurrencyRateDomainModel(bCurrency Domain.Currency, wCurrency Domain.Currency, rate int) CurrencyRateModel {
 	return CurrencyRateModel{
 		bCurrency,
 		wCurrency,

@@ -7,9 +7,9 @@ import (
 )
 
 type JsonCurrency struct {
-	Amount          float64 `json:"amount"`
-	CurrentCurrency string  `json:"currentCurrency"`
-	WantedCurrency  string  `json:"wantedCurrency"`
+	Amount          int    `json:"amount"`
+	CurrentCurrency string `json:"currentCurrency"`
+	WantedCurrency  string `json:"wantedCurrency"`
 }
 
 type CurrencyViewModel struct {
@@ -17,7 +17,7 @@ type CurrencyViewModel struct {
 	validation validation.Validation
 }
 
-func (c *CurrencyViewModel) GetAmount() float64 {
+func (c *CurrencyViewModel) GetAmount() int {
 	return c.Amount
 }
 
