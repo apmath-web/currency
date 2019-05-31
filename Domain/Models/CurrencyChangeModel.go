@@ -15,7 +15,7 @@ func (i *CurrencyChangeModel) GetAmount() int {
 	return i.amount
 }
 
-func GenCurrencyChangeDomainModel(currency Domain.Currency, amount int) CurrencyChangeModel {
-	return CurrencyChangeModel{currency, amount}
+func GenCurrencyChangeDomainModel(currency Domain.Currency, amount int) *CurrencyChangeModel {
+	return &CurrencyChangeModel{currency, amount}
 
 }

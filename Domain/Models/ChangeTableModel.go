@@ -12,8 +12,8 @@ func (i *ChangeTable) GetCurrencyRates() []Domain.CurrencyRate {
 	return i.currencyRates
 }
 
-func GenChangeTableDomainModel(currencyRates []Domain.CurrencyRate) ChangeTable {
-	return ChangeTable{
+func GenChangeTableDomainModel(currencyRates []Domain.CurrencyRate) *ChangeTable {
+	return &ChangeTable{
 		currencyRates,
 	}
 }
