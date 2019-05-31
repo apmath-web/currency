@@ -18,3 +18,7 @@ type CurrencyChange interface {
 type ChangeTable interface {
 	GetCurrencyRates() []CurrencyRate
 }
+
+type Fetcher interface {
+	FetchRate(baseCurrency string, wantedCurrency string) (float64, error)
+}
