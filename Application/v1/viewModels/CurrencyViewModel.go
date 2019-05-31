@@ -2,6 +2,7 @@ package viewModels
 
 import (
 	"encoding/json"
+
 	"github.com/apmath-web/currency/Application/v1/validation"
 	"github.com/apmath-web/currency/Domain"
 )
@@ -75,8 +76,8 @@ func (c *CurrencyViewModel) UnmarshalJSON(b []byte) error {
 
 func (c *CurrencyViewModel) Hydrate(model Domain.CurrencyChange) {
 	c.Amount = model.GetAmount()
-	c.CurrentCurrency = model.GetCurrency().GetName()
-	c.WantedCurrency = model.GetCurrency().GetName()
+	c.CurrentCurrency = model.GetCurrentCurrency().GetName()
+	c.WantedCurrency = model.GetWantedCurrency().GetName()
 }
 
 func (c *CurrencyViewModel) Validate() bool {
