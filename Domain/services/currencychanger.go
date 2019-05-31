@@ -2,7 +2,6 @@ package services
 
 import (
 	"github.com/apmath-web/currency/Domain"
-	"github.com/apmath-web/currency/Domain/Models"
 )
 
 type CurrencyChangerService struct {
@@ -15,7 +14,7 @@ func Create(changeTable Domain.ChangeTableRepositoryInterface) Domain.CurrencyCh
 	return service
 }
 
-func (ccs *CurrencyChangerService) Change(curCurrency domainModels.CurrencyModel, wanCurrency domainModels.CurrencyModel, Amount float64) float64 {
+func (ccs *CurrencyChangerService) Change(curCurrency Domain.Currency, wanCurrency Domain.Currency, Amount float64) float64 {
 	rate := ccs.changeTable.GetRate(curCurrency.GetName(), wanCurrency.GetName()).GetRate()
 	return Amount * rate
 }
