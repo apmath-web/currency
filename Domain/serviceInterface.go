@@ -1,11 +1,13 @@
 package Domain
 
+import domainModels "github.com/apmath-web/currency/Domain/Models"
+
 type UpdaterTable interface {
 	Update(currentTable ChangeTable) (ChangeTable, error)
 }
 
-type CurrencyChanger interface {
-	Change(wantToChange CurrencyChange, wantedCurrency Currency) CurrencyChange
+type CurrencyChangerInterface interface {
+	Change(curCurrency domainModels.CurrencyModel, wanCurrency domainModels.CurrencyModel, Amount float64) float64
 }
 
 type ChangeTableServiceInterface interface {
