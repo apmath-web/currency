@@ -4,22 +4,25 @@ type Currency interface {
 	GetName() string
 }
 
-type CurrencyRate interface {
+type CurrencyRateInterface interface {
 	GetBasedCurrency() Currency
 	GetWantedCurrency() Currency
 	GetRate() float64
 }
 
-type CurrencyChange interface {
+type CurrencyChangeInterface interface {
 	GetWantedCurrency() Currency
 	GetCurrentCurrency() Currency
 	GetAmount() int
 }
 
-type ChangeTable interface {
-	GetCurrencyRates() []CurrencyRate
+type RatesInterface interface {
+	GetCurrencyRates() []CurrencyRateInterface
 }
 
+type RateInterface interface {
+	GetRate() float64
+}
 type Fetcher interface {
 	FetchRate(baseCurrency string, wantedCurrency string) (float64, error)
 }
