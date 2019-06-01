@@ -1,3 +1,3 @@
 package Domain
 
-var Currencies  = []string{"USD","EUR","RUR"}
+var Currencies = []string{"USD", "EUR", "RUB"}
