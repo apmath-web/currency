@@ -5,7 +5,6 @@ import (
 
 	"github.com/apmath-web/currency/Domain"
 	domainModels "github.com/apmath-web/currency/Domain/Models"
-	"github.com/apmath-web/currency/Infrastructure/applicationModels"
 )
 
 type UpdaterTableModel struct {
@@ -30,8 +29,8 @@ func (i *UpdaterTableModel) Update(currentTable Domain.ChangeTable) (Domain.Chan
 	return domainModels.GenChangeTableDomainModel(currentRates), nil
 }
 
-func GenUpdaterTableDomainModel() Domain.UpdaterTable {
+func GenUpdaterTableDomainModel(fetcher Domain.Fetcher) Domain.UpdaterTable {
 	return &UpdaterTableModel{
-		applicationModels.GenFetcherApplicationModel(),
+		fetcher,
 	}
 }

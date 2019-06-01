@@ -26,8 +26,6 @@ func (i *FetcherModel) FetchRate(baseCurrency string, wantedCurrency string) (fl
 
 	body, err := ioutil.ReadAll(res.Body)
 
-	// _, err = os.Stdout.Write(body)
-
 	var data map[string]interface{}
 
 	errOfUnmurshal := json.Unmarshal(body, &data)
@@ -37,7 +35,6 @@ func (i *FetcherModel) FetchRate(baseCurrency string, wantedCurrency string) (fl
 
 	rates := data["rates"].(map[string]interface{})
 	fmt.Print(rates[wantedCurrency])
-	//xccrate := rates[wantedCurrency].(float64)
 	return rates[wantedCurrency].(float64), nil
 }
 

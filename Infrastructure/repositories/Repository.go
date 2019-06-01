@@ -1,7 +1,10 @@
 package repositories
 
 import (
+	"sync"
+
 	"github.com/apmath-web/currency/Domain"
+	domainModels "github.com/apmath-web/currency/Domain/Models"
 )
 
 type Repository struct {
@@ -22,7 +25,7 @@ func (repository *Repository) ClearAllTable() error {
 	return nil
 }
 
-func (repository *Repository) GetRate(currentCurrency string, wantedCurrency string) Domain.CurrencyRate {
+func (repository *Repository) GetRate(currentCurrency string, wantedCurrency string) Domain.CurrencyRateInterface {
 	table := repository.GetAllTable()
 	currencies := table.GetCurrencyRates()
 	currencyRate := currencies[0]
@@ -34,4 +37,44 @@ func (repository *Repository) GetRate(currentCurrency string, wantedCurrency str
 		}
 	}
 	return currencyRate
+}
+
+var once sync.Once
+var repo *Repository
+
+func GenRepository() Domain.ChangeTableRepositoryInterface {
+
+	once.Do(func() {
+		repo = &Repository{
+			domainModels.GenChangeTableDomainModel(
+				[]Domain.CurrencyRateInterface{
+					domainModels.GenCurrencyRateDomainModel(
+						domainModels.GenCurrencyDomainModel("USD"),
+						domainModels.GenCurrencyDomainModel("EUR"),
+						0),
+					domainModels.GenCurrencyRateDomainModel(
+						domainModels.GenCurrencyDomainModel("USD"),
+						domainModels.GenCurrencyDomainModel("RUB"),
+						0),
+					domainModels.GenCurrencyRateDomainModel(
+						domainModels.GenCurrencyDomainModel("EUR"),
+						domainModels.GenCurrencyDomainModel("USD"),
+						0),
+					domainModels.GenCurrencyRateDomainModel(
+						domainModels.GenCurrencyDomainModel("EUR"),
+						domainModels.GenCurrencyDomainModel("RUB"),
+						0),
+					domainModels.GenCurrencyRateDomainModel(
+						domainModels.GenCurrencyDomainModel("RUB"),
+						domainModels.GenCurrencyDomainModel("EUR"),
+						0),
+					domainModels.GenCurrencyRateDomainModel(
+						domainModels.GenCurrencyDomainModel("RUB"),
+						domainModels.GenCurrencyDomainModel("USD"),
+						0),
+				}),
+		}
+	})
+
+	return repo
 }

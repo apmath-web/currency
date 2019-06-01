@@ -22,7 +22,7 @@ func (i *CurrencyRateModel) GetRate() float64 {
 	return i.Rate
 }
 
-func GenCurrencyRateDomainModel(bCurrency Domain.Currency, wCurrency Domain.Currency, rate float64) *CurrencyRateModel {
+func GenCurrencyRateDomainModel(bCurrency Domain.Currency, wCurrency Domain.Currency, rate float64) Domain.CurrencyRateInterface {
 	return &CurrencyRateModel{
 		bCurrency,
 		wCurrency,
