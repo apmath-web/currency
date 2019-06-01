@@ -5,14 +5,14 @@ import (
 )
 
 type ChangeTable struct {
-	currencyRates []Domain.CurrencyRate
+	currencyRates [6]Domain.CurrencyRate
 }
 
-func (i *ChangeTable) GetCurrencyRates() []Domain.CurrencyRate {
+func (i *ChangeTable) GetCurrencyRates() [6]Domain.CurrencyRate {
 	return i.currencyRates
 }
 
-func GenChangeTableDomainModel(currencyRates []Domain.CurrencyRate) *ChangeTable {
+func GenChangeTableDomainModel(currencyRates [6]Domain.CurrencyRate) *ChangeTable {
 	return &ChangeTable{
 		currencyRates,
 	}

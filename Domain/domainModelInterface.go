@@ -17,7 +17,7 @@ type CurrencyChange interface {
 }
 
 type ChangeTable interface {
-	GetCurrencyRates() []CurrencyRate
+	GetCurrencyRates() [6]CurrencyRate
 }
 
 type Fetcher interface {
