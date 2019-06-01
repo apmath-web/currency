@@ -46,5 +46,5 @@ func CurrencyHandler(c *gin.Context) {
 
 	resultAmount := rate * float64(dm.GetAmount())
 
-	c.JSON(http.StatusCreated, gin.H{"amount": resultAmount, "currency": dm.GetWantedCurrency().GetName(), "rate": rate})
+	c.JSON(http.StatusCreated, gin.H{"amount": resultAmount, "currency": dm.GetWantedCurrency().GetName()})
 }
