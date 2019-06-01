@@ -78,30 +78,3 @@ func GenRepository() Domain.ChangeTableRepositoryInterface {
 
 	return repo
 }
-
-// domainModels.CurrencyRateModel{},
-// 				domainModels.CurrencyRateModel{
-// 					domainModels.CurrencyModel{"USD"},
-// 					domainModels.GenCurrencyDomainModel("EUR"),
-// 					0,
-// 				},
-// 				CurrencyRateModel{
-// 					"RUB",
-// 					"USD",
-// 					0,
-// 				},
-// 				CurrencyRateModel{
-// 					"RUB",
-// 				"EUR",
-// 					0,
-// 				},
-// 				CurrencyRateModel{
-// 					"EUR",
-// 					"RUB",
-// 					0,
-// 				},
-// 				CurrencyRateModel{
-// 					"EUR",
-// 					"USD",
-// 					0,
-// 				},
