@@ -1,14 +1,13 @@
 package Domain
 
-type UpdaterTable interface {
-	Update(currentTable ChangeTable) (ChangeTable, error)
+type UpdaterInterface interface {
+	Update() error
 }
 
-type CurrencyChangerInterface interface {
-	Change(curCurrency Currency, wanCurrency Currency, Amount float64) float64
+type ExchangerInterface interface {
+	Exchange(data CurrencyChangeInterface) float64
 }
 
-type ChangeTableServiceInterface interface {
-	Add(table ChangeTable) error
-	Get() ChangeTable
+type FetcherInterface interface {
+	FetchAll() RatesInterface
 }

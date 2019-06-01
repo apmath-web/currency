@@ -23,6 +23,3 @@ type RatesInterface interface {
 type RateInterface interface {
 	GetRate() float64
 }
-type Fetcher interface {
-	FetchRate(baseCurrency string, wantedCurrency string) (float64, error)
-}
