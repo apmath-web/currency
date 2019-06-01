@@ -45,25 +45,7 @@ func (c *CurrencyViewModel) validateAmount() bool {
 	return true
 }
 
-func (c *CurrencyViewModel) validateCurrentCurrency() bool {
-	for _, cc := range Domain.Currencies {
-		if cc == c.CurrentCurrency {
-			return true
-		}
-	}
-	c.validation.AddMessage(validation.GenMessage("CurrentCurrency", "Is incorrect"))
-	return false
-}
-
-func (c *CurrencyViewModel) validateWantedCurrency() bool {
-	for _, cc := range Domain.Currencies {
-		if cc == c.CurrentCurrency {
-			return true
-		}
-	}
-	c.validation.AddMessage(validation.GenMessage("WantedCurrency", "Is incorrect"))
-	return false
-}
+//выпилил валидацию валют, так как тперь все обрабатываем вроде
 
 func (c *CurrencyViewModel) UnmarshalJSON(b []byte) error {
 	tmpModel := JsonCurrency{}
