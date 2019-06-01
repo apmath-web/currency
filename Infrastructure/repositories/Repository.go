@@ -25,7 +25,7 @@ func (repository *Repository) ClearAllTable() error {
 	return nil
 }
 
-func (repository *Repository) GetRate(currentCurrency string, wantedCurrency string) Domain.CurrencyRate {
+func (repository *Repository) GetRate(currentCurrency string, wantedCurrency string) Domain.CurrencyRateInterface {
 	table := repository.GetAllTable()
 	currencies := table.GetCurrencyRates()
 	currencyRate := currencies[0]
@@ -47,7 +47,7 @@ func GenRepository() Domain.ChangeTableRepositoryInterface {
 	once.Do(func() {
 		repo = &Repository{
 			domainModels.GenChangeTableDomainModel(
-				[6]Domain.CurrencyRate{
+				[]Domain.CurrencyRateInterface{
 					domainModels.GenCurrencyRateDomainModel(
 						domainModels.GenCurrencyDomainModel("USD"),
 						domainModels.GenCurrencyDomainModel("EUR"),
