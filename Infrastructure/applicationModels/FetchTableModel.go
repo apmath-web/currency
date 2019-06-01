@@ -2,6 +2,7 @@ package applicationModels
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -12,7 +13,7 @@ import (
 type FetcherModel struct{}
 
 func (i *FetcherModel) FetchRate(baseCurrency string, wantedCurrency string) (float64, error) {
-	url := ApiUrl + wantedCurrency + "&base=" + baseCurrency
+	url := ApiUrl + "symbols=" + wantedCurrency + "&base=" + baseCurrency
 
 	res, err := http.Get(url)
 
@@ -25,26 +26,19 @@ func (i *FetcherModel) FetchRate(baseCurrency string, wantedCurrency string) (fl
 
 	body, err := ioutil.ReadAll(res.Body)
 
-	type ratesT struct {
-		Rate float64
-	}
+	// _, err = os.Stdout.Write(body)
 
-	type dataT struct {
-		Base  string `json:"base"`
-		Rates ratesT `json:"rates"`
-	}
-
-	data := dataT{
-		baseCurrency,
-		ratesT{},
-	}
+	var data map[string]interface{}
 
 	errOfUnmurshal := json.Unmarshal(body, &data)
 	if errOfUnmurshal != nil {
 		log.Fatal(errOfUnmurshal)
 	}
 
-	return data.Rates.Rate, nil
+	rates := data["rates"].(map[string]interface{})
+	fmt.Print(rates[wantedCurrency])
+	//xccrate := rates[wantedCurrency].(float64)
+	return rates[wantedCurrency].(float64), nil
 }
 
 func GenFetcherApplicationModel() Domain.Fetcher {

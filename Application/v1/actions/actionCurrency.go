@@ -36,7 +36,7 @@ func CurrencyHandler(c *gin.Context) {
 
 	dm := mapper.CurrencyMapper(vm)
 
-	fetcher := applicationModels.GenFetcherApplicationModel()
+	fetcher := applicationModels.FetcherModel{}
 
 	rate, err := fetcher.FetchRate(dm.GetCurrentCurrency().GetName(), dm.GetWantedCurrency().GetName())
 
@@ -46,5 +46,5 @@ func CurrencyHandler(c *gin.Context) {
 
 	resultAmount := rate * float64(dm.GetAmount())
 
-	c.JSON(http.StatusCreated, gin.H{"amount": resultAmount, "currency": dm.GetWantedCurrency().GetName()})
+	c.JSON(http.StatusCreated, gin.H{"amount": resultAmount, "currency": dm.GetWantedCurrency().GetName(), "rate": rate})
 }
