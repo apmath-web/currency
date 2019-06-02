@@ -17,6 +17,12 @@ type FetchRateInterface interface {
 >>>>>>> changes ExchangeInterface type of what you get from Exchange
 }
 
+type FetchRateInterface interface {
+	GetBaseCurrency() string
+	GetWantedCurrency() string
+	GetRate() float64
+}
+
 type FetcherInterface interface {
 	FetchAll() []FetchRateInterface
 }
