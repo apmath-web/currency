@@ -15,8 +15,8 @@ type CurrencyRateInterface interface {
 }
 
 type CurrencyChangeInterface interface {
-	GetWantedCurrency() string
-	GetBaseCurrency() string
+	GetWantedCurrency() CurrencyInterface
+	GetBaseCurrency() CurrencyInterface
 	GetAmount() int
 }
 
