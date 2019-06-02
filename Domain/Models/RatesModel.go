@@ -8,12 +8,12 @@ type Rates struct {
 	currencyRates []Domain.CurrencyRateInterface
 }
 
-func (i *Rates) GetRates() []Domain.CurrencyRateInterface {
+func (i *Rates) GetCurrencyRates() []Domain.CurrencyRateInterface {
 	return i.currencyRates
 }
 
 func GenRates(currencyRates []Domain.CurrencyRateInterface) Domain.RatesInterface {
-	return Rates{
+	return &Rates{
 		currencyRates,
 	}
 }

@@ -85,9 +85,9 @@ func (c *CurrencyViewModel) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-func (c *CurrencyViewModel) Hydrate(model Domain.CurrencyChange) {
+func (c *CurrencyViewModel) Hydrate(model Domain.CurrencyChangeInterface) {
 	c.Amount = model.GetAmount()
-	c.CurrentCurrency = model.GetCurrentCurrency().GetName()
+	c.CurrentCurrency = model.GetBaseCurrency().GetName()
 	c.WantedCurrency = model.GetWantedCurrency().GetName()
 }
 
