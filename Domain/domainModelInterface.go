@@ -1,18 +1,18 @@
 package Domain
 
-type Currency interface {
+type CurrencyInterface interface {
 	GetName() string
 }
 
 type CurrencyRateInterface interface {
-	GetBasedCurrency() Currency
-	GetWantedCurrency() Currency
+	GetBaseCurrency() CurrencyInterface
+	GetWantedCurrency() CurrencyInterface
 	GetRate() float64
 }
 
 type CurrencyChangeInterface interface {
-	GetWantedCurrency() Currency
-	GetCurrentCurrency() Currency
+	GetWantedCurrency() CurrencyInterface
+	GetBaseCurrency() CurrencyInterface
 	GetAmount() int
 }
 
