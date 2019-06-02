@@ -8,15 +8,15 @@ import (
 )
 
 type Repository struct {
-	currentRates Domain.ChangeTable
+	currentRates Domain.RatesInterface
 }
 
-func (repository *Repository) SetAllTable(table Domain.ChangeTable) error {
+func (repository *Repository) SetAllTable(table Domain.RatesInterface) error {
 	repository.currentRates = table
 	return nil
 }
 
-func (repository *Repository) GetAllTable() Domain.ChangeTable {
+func (repository *Repository) GetAllTable() Domain.RatesInterface {
 	return repository.currentRates
 }
 
