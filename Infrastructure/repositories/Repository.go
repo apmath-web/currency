@@ -2,6 +2,8 @@ package repositories
 
 import (
 	"github.com/apmath-web/currency/Domain"
+	"log"
+	"sync"
 )
 
 type Repository struct {
@@ -15,4 +17,14 @@ func (repository *Repository) Set(from Domain.CurrencyInterface, to Domain.Curre
 
 func (repository *Repository) Get(from Domain.CurrencyInterface, to Domain.CurrencyInterface) Domain.RateInterface {
 	return Domain.GenRate(repository.rates[from.GetName()][to.GetName()])
+}
+
+var repo *Repository
+var once sync.Once
+
+func GenRepository() Domain.RepositoryInterface {
+	once.Do(func() {
+		repo = &Repository{make(map[string]map[string]float64)}
+	})
+	return repo
 }
