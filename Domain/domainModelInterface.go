@@ -4,6 +4,10 @@ type Currency interface {
 	GetName() string
 }
 
+type AmountInterface interface {
+	GetAmount() int
+}
+
 type CurrencyRateInterface interface {
 	GetBasedCurrency() Currency
 	GetWantedCurrency() Currency
