@@ -11,7 +11,7 @@ func (i *Currency) GetName() string {
 }
 
 func GenCurrency(name string) Domain.CurrencyInterface {
-	return Currency{
+	return &Currency{
 		name,
 	}
 }

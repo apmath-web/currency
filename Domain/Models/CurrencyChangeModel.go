@@ -21,5 +21,5 @@ func (i *CurrencyChange) GetWantedCurrency() Domain.CurrencyInterface {
 }
 
 func GenCurrencyChange(baseCurrency Domain.CurrencyInterface, wantedCurrency Domain.CurrencyInterface, amount int) Domain.CurrencyChangeInterface {
-	return{amount, baseCurrency, wantedCurrency}
+	return &CurrencyChange{amount, baseCurrency, wantedCurrency}
 }
