@@ -2,6 +2,7 @@ package viewModels
 
 import (
 	"encoding/json"
+	"unicode"
 
 	"github.com/apmath-web/currency/Application/v1/validation"
 	"github.com/apmath-web/currency/Domain"
@@ -45,7 +46,35 @@ func (c *CurrencyViewModel) validateAmount() bool {
 	return true
 }
 
-//выпилил валидацию валют, так как тперь все обрабатываем вроде
+func (c *CurrencyViewModel) validateCurrentCurrency() bool {
+	if len(c.CurrentCurrency) != 3 {
+		c.validation.AddMessage(validation.GenMessage("CurrentCurrency", "Is incorrect"))
+		return false
+	}
+
+	for _, char := range c.CurrentCurrency {
+		if !unicode.IsUpper(char) {
+			c.validation.AddMessage(validation.GenMessage("CurrentCurrency", "Is incorrect"))
+			return false
+		}
+	}
+	return true
+}
+
+func (c *CurrencyViewModel) validateWantedCurrency() bool {
+	if len(c.WantedCurrency) != 3 {
+		c.validation.AddMessage(validation.GenMessage("WantedCurrency", "Is incorrect"))
+		return false
+	}
+
+	for _, char := range c.WantedCurrency {
+		if !unicode.IsUpper(char) {
+			c.validation.AddMessage(validation.GenMessage("WantedCurrency", "Is incorrect"))
+			return false
+		}
+	}
+	return true
+}
 
 func (c *CurrencyViewModel) UnmarshalJSON(b []byte) error {
 	tmpModel := JsonCurrency{}
