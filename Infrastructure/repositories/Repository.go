@@ -5,33 +5,14 @@ import (
 )
 
 type Repository struct {
-	currentRates Domain.RatesInterface
+	rates map[string]map[string]float64
 }
 
-func (repository *Repository) SetAllTable(table Domain.RatesInterface) error {
-	repository.currentRates = table
+func (repository *Repository) Set(from Domain.CurrencyInterface, to Domain.CurrencyInterface, value Domain.RateInterface) error {
+	repository.rates[from.GetName()][to.GetName()] = value.GetRate()
 	return nil
 }
 
-func (repository *Repository) GetAllTable() Domain.RatesInterface {
-	return repository.currentRates
-}
-
-func (repository *Repository) ClearAllTable() error {
-	repository.currentRates = nil
-	return nil
-}
-
-func (repository *Repository) GetRate(currentCurrency string, wantedCurrency string) Domain.CurrencyRateInterface {
-	table := repository.GetAllTable()
-	currencies := table.GetCurrencyRates()
-	currencyRate := currencies[0]
-	for _, cRate := range currencies {
-		if cRate.GetBaseCurrency().GetName() == currentCurrency &&
-			cRate.GetWantedCurrency().GetName() == wantedCurrency {
-			currencyRate = cRate
-			break
-		}
-	}
-	return currencyRate
+func (repository *Repository) Get(from Domain.CurrencyInterface, to Domain.CurrencyInterface) Domain.RateInterface {
+	return Domain.GenRate(repository.rates[from.GetName()][to.GetName()])
 }
