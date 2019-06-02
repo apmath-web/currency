@@ -4,26 +4,26 @@ import (
 	"github.com/apmath-web/currency/Domain"
 )
 
-type CurrencyRateModel struct {
-	basedCurrency  Domain.Currency
-	wantedCurrency Domain.Currency
-	Rate           float64
+type CurrencyRate struct {
+	baseCurrency   Domain.CurrencyInterface
+	wantedCurrency Domain.CurrencyInterface
+	rate           float64
 }
 
-func (i *CurrencyRateModel) GetBasedCurrency() Domain.Currency {
-	return i.basedCurrency
+func (i *CurrencyRate) GetBaseCurrency() Domain.CurrencyInterface {
+	return i.baseCurrency
 }
 
-func (i *CurrencyRateModel) GetWantedCurrency() Domain.Currency {
+func (i *CurrencyRate) GetWantedCurrency() Domain.CurrencyInterface {
 	return i.wantedCurrency
 }
 
-func (i *CurrencyRateModel) GetRate() float64 {
-	return i.Rate
+func (i *CurrencyRate) GetRate() float64 {
+	return i.rate
 }
 
-func GenCurrencyRateDomainModel(bCurrency Domain.Currency, wCurrency Domain.Currency, rate float64) *CurrencyRateModel {
-	return &CurrencyRateModel{
+func GenCurrencyRate(bCurrency Domain.CurrencyInterface, wCurrency Domain.CurrencyInterface, rate float64) Domain.CurrencyRateInterface {
+	return &CurrencyRate{
 		bCurrency,
 		wCurrency,
 		rate,

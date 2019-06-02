@@ -27,7 +27,7 @@ func (repository *Repository) GetRate(currentCurrency string, wantedCurrency str
 	currencies := table.GetCurrencyRates()
 	currencyRate := currencies[0]
 	for _, cRate := range currencies {
-		if cRate.GetBasedCurrency().GetName() == currentCurrency &&
+		if cRate.GetBaseCurrency().GetName() == currentCurrency &&
 			cRate.GetWantedCurrency().GetName() == wantedCurrency {
 			currencyRate = cRate
 			break

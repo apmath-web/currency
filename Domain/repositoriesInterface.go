@@ -1,6 +1,6 @@
 package Domain
 
 type RepositoryInterface interface {
-	Set(data CurrencyRateInterface) error
-	Get(from Currency, to Currency) RateInterface
+	Set(from CurrencyInterface, to CurrencyInterface, value RateInterface) error
+	Get(from CurrencyInterface, to CurrencyInterface) RateInterface
 }
