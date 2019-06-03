@@ -1,8 +1,6 @@
 package Domain
 
-type ChangeTableRepositoryInterface interface {
-	SetAllTable(table ChangeTable) error
-	GetAllTable() ChangeTable
-	ClearAllTable() error
-	GetRate(currentCurrency string, wantedCurrency string) CurrencyRateInterface
+type RepositoryInterface interface {
+	Set(from CurrencyInterface, to CurrencyInterface, value RateInterface) error
+	Get(from CurrencyInterface, to CurrencyInterface) RateInterface
 }
