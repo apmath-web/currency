@@ -3,9 +3,8 @@ package repositories
 import (
 	"sync"
 
-	"sync"
-
 	"github.com/apmath-web/currency/Domain"
+	domainModels "github.com/apmath-web/currency/Domain/Models"
 )
 
 type Repository struct {
@@ -18,7 +17,7 @@ func (repository *Repository) Set(from Domain.CurrencyInterface, to Domain.Curre
 }
 
 func (repository *Repository) Get(from Domain.CurrencyInterface, to Domain.CurrencyInterface) Domain.RateInterface {
-	return Domain.GenRate(repository.rates[from.GetName()][to.GetName()])
+	return domainModels.GenRate(repository.rates[from.GetName()][to.GetName()])
 }
 
 var repo *Repository
