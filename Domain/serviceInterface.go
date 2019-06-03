@@ -8,7 +8,11 @@ type CurrencyChangerInterface interface {
 	Change(curCurrency Currency, wanCurrency Currency, Amount float64) float64
 }
 
-type ChangeTableServiceInterface interface {
-	Add(table ChangeTable) error
-	Get() ChangeTable
+type FetchRateInterface interface {
+	GetCurrency() string
+	GetRate() float64
+}
+
+type FetcherInterface interface {
+	FetchAll() []FetchRateInterface
 }
