@@ -5,17 +5,14 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/apmath-web/currency/Application/v1/mapper"
 	"github.com/apmath-web/currency/Application/v1/validation"
 	"github.com/apmath-web/currency/Application/v1/viewModels"
-	"github.com/apmath-web/currency/Infrastructure/applicationModels"
+	"github.com/apmath-web/currency/Infrastructure"
 	"github.com/gin-gonic/gin"
 )
 
 func CurrencyHandler(c *gin.Context) {
-	// currentCurrency, err := strconv.Atoi(c.Param("currentCurrency"))
-	// wantedCurrency, err := strconv.Atoi(c.Param("wantedCurrency"))
-	// amount := c.Param("amount")
-
 	vm := viewModels.CurrencyViewModel{}
 	if err := c.BindJSON(&vm); err != nil {
 		validator := validation.GenValidation()
@@ -33,13 +30,20 @@ func CurrencyHandler(c *gin.Context) {
 		return
 	}
 
-	// dm := mapper.CurrencyMapper(vm)
+	dm := mapper.CurrencyMapper(vm)
 
-	fetcher := applicationModels.Fetcher{}
+	updater := Infrastructure.GetServiceManager().GetUpdaterService()
+	updater.Update()
 
-	rates := fetcher.FetchAll()
+	exchanger := Infrastructure.GetServiceManager().GetExchangerService()
+	ans := exchanger.Exchange(dm)
 
-	fmt.Print(rates)
+	fmt.Print(ans.GetAmount())
+	// fetcher := applicationModels.Fetcher{}
+
+	// rates := fetcher.FetchAll()
+
+	// fmt.Print(rates)
 	// if err != nil {
 	// 	log.Fatal(err)
 	// }

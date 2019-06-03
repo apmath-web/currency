@@ -1,6 +1,8 @@
 package Infrastructure
 
 import (
+	"sync"
+
 	"github.com/apmath-web/currency/Domain"
 	"github.com/apmath-web/currency/Domain/services"
 	"github.com/apmath-web/currency/Infrastructure/applicationModels"
@@ -26,4 +28,14 @@ func (sm *ServiceManagerClass) GetExchangerService() Domain.ExchangerInterface {
 func (sm *ServiceManagerClass) GetUpdaterService() Domain.UpdaterInterface {
 	service := services.GenUpdater(sm.GetRepository(), sm.GetFetcher())
 	return service
+}
+
+var serviceManager *ServiceManagerClass
+var once sync.Once
+
+func GetServiceManager() *ServiceManagerClass {
+	once.Do(func() {
+		serviceManager = &ServiceManagerClass{}
+	})
+	return serviceManager
 }
