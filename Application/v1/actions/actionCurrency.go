@@ -32,13 +32,13 @@ func CurrencyHandler(c *gin.Context) {
 
 	dm := mapper.CurrencyMapper(vm)
 
-	updater := Infrastructure.GetServiceManager().GetUpdaterService()
-	updater.Update()
+	// updater := Infrastructure.GetServiceManager().GetUpdaterService()
+	// updater.Update()
 
 	exchanger := Infrastructure.GetServiceManager().GetExchangerService()
 	ans := exchanger.Exchange(dm)
 
-	fmt.Print(ans.GetAmount())
+	fmt.Print("Answer", ans.GetAmount())
 	// fetcher := applicationModels.Fetcher{}
 
 	// rates := fetcher.FetchAll()
@@ -48,5 +48,5 @@ func CurrencyHandler(c *gin.Context) {
 	// 	log.Fatal(err)
 	// }
 
-	// c.JSON(http.StatusCreated, gin.H{"amount": resultAmount, "currency": dm.GetWantedCurrency().GetName()})
+	c.JSON(http.StatusCreated, gin.H{"amount": ans.GetAmount(), "currency": dm.GetWantedCurrency().GetName()})
 }

@@ -17,6 +17,21 @@ func (instance *Updater) Update() error {
 		domainModels.GenRate(1.0))
 
 	rates := instance.fetcher.FetchAll()
+
+	for _, currency := range rates {
+		instance.repository.Set(
+			domainModels.GenCurrency("RUB"),
+			domainModels.GenCurrency(currency.GetCurrency()),
+			domainModels.GenRate(currency.GetRate()),
+		)
+		instance.repository.Set(
+			domainModels.GenCurrency(currency.GetCurrency()),
+			domainModels.GenCurrency("RUB"),
+			domainModels.GenRate(1/currency.GetRate()),
+		)
+
+	}
+
 	for _, currency1 := range rates {
 		for _, currency2 := range rates {
 			instance.repository.Set(
@@ -25,6 +40,8 @@ func (instance *Updater) Update() error {
 				domainModels.GenRate(currency1.GetRate()/currency2.GetRate()))
 		}
 	}
+
+	// instance.repository.Print()
 	return nil
 }
 
