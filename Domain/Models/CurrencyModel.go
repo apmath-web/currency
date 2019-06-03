@@ -1,15 +1,17 @@
 package domainModels
 
-type CurrencyModel struct {
+import "github.com/apmath-web/currency/Domain"
+
+type Currency struct {
 	name string
 }
 
-func (i *CurrencyModel) GetName() string {
+func (i *Currency) GetName() string {
 	return i.name
 }
 
-func GenCurrencyDomainModel(name string) *CurrencyModel {
-	return &CurrencyModel{
+func GenCurrency(name string) Domain.CurrencyInterface {
+	return &Currency{
 		name,
 	}
 }
