@@ -27,3 +27,10 @@ func (instance *Updater) Update() error {
 	}
 	return nil
 }
+
+func GenUpdater(repository Domain.RepositoryInterface, fetcher Domain.FetcherInterface) Domain.UpdaterInterface {
+	return &Updater{
+		repository,
+		fetcher,
+	}
+}

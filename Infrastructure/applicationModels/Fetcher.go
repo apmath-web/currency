@@ -44,3 +44,7 @@ func (i *Fetcher) FetchAll() []Domain.FetchRateInterface {
 	return fetchRates
 
 }
+
+func GenFetcher() Domain.FetcherInterface {
+	return &Fetcher{}
+}

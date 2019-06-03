@@ -1,0 +1,29 @@
+package Infrastructure
+
+import (
+	"github.com/apmath-web/currency/Domain"
+	"github.com/apmath-web/currency/Domain/services"
+	"github.com/apmath-web/currency/Infrastructure/applicationModels"
+	"github.com/apmath-web/currency/Infrastructure/repositories"
+)
+
+type ServiceManagerClass struct {
+}
+
+func (sm *ServiceManagerClass) GetRepository() Domain.RepositoryInterface {
+	return repositories.GenRepository()
+}
+
+func (sm *ServiceManagerClass) GetFetcher() Domain.FetcherInterface {
+	return applicationModels.GenFetcher()
+}
+
+func (sm *ServiceManagerClass) GetExchangerService() Domain.ExchangerInterface {
+	service := services.GenExchanger(sm.GetRepository())
+	return service
+}
+
+func (sm *ServiceManagerClass) GetUpdaterService() Domain.UpdaterInterface {
+	service := services.GenUpdater(sm.GetRepository(), sm.GetFetcher())
+	return service
+}
