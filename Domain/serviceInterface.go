@@ -18,8 +18,7 @@ type FetchRateInterface interface {
 }
 
 type FetchRateInterface interface {
-	GetBaseCurrency() string
-	GetWantedCurrency() string
+	GetCurrency() string
 	GetRate() float64
 }
 

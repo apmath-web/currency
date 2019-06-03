@@ -2,6 +2,10 @@ package actions
 
 import (
 	"encoding/json"
+<<<<<<< HEAD
+=======
+	"fmt"
+>>>>>>> fetcher added
 	"net/http"
 
 	"github.com/apmath-web/currency/Application/v1/validation"
@@ -31,4 +35,19 @@ func CurrencyHandler(c *gin.Context) {
 		return
 	}
 
+<<<<<<< HEAD
+=======
+	// dm := mapper.CurrencyMapper(vm)
+
+	fetcher := applicationModels.Fetcher{}
+
+	rates := fetcher.FetchAll()
+
+	fmt.Print(rates)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// c.JSON(http.StatusCreated, gin.H{"amount": resultAmount, "currency": dm.GetWantedCurrency().GetName()})
+>>>>>>> fetcher added
 }
