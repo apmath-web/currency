@@ -10,6 +10,7 @@ func GenRouter() *gin.Engine {
 	v1 := router.Group("/v1")
 	{
 		v1.POST("/", actions.CurrencyHandler)
+		v1.POST("/update", actions.UpdaterHandler)
 	}
 	return router
 }

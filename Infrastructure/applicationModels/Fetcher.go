@@ -2,7 +2,6 @@ package applicationModels
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -38,9 +37,9 @@ func (i *Fetcher) FetchAll() []Domain.FetchRateInterface {
 		rate := infoAboutCurrency["Value"].(float64)
 		fetchRates = append(fetchRates, GenFetchRate(key, rate))
 	}
-	for _, obj := range fetchRates {
-		fmt.Print(obj.GetCurrency(), " ", obj.GetRate(), "\n")
-	}
+	// for _, obj := range fetchRates {
+	// 	//fmt.Print(obj.GetCurrency(), " ", obj.GetRate(), "\n")
+	// }
 	return fetchRates
 
 }
