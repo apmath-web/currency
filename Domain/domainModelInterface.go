@@ -20,10 +20,6 @@ type CurrencyChangeInterface interface {
 	GetAmount() int
 }
 
-type RatesInterface interface {
-	GetCurrencyRates() []CurrencyRateInterface
-}
-
 type RateInterface interface {
 	GetRate() float64
 }
