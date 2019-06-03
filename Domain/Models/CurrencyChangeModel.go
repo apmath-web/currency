@@ -2,24 +2,24 @@ package domainModels
 
 import "github.com/apmath-web/currency/Domain"
 
-type CurrencyChangeModel struct {
-	amount          int
-	currentCurrency Domain.Currency
-	wantedCurrency  Domain.Currency
+type CurrencyChange struct {
+	amount         int
+	baseCurrency   Domain.CurrencyInterface
+	wantedCurrency Domain.CurrencyInterface
 }
 
-func (i *CurrencyChangeModel) GetCurrentCurrency() Domain.Currency {
-	return i.currentCurrency
+func (i *CurrencyChange) GetBaseCurrency() Domain.CurrencyInterface {
+	return i.baseCurrency
 }
 
-func (i *CurrencyChangeModel) GetAmount() int {
+func (i *CurrencyChange) GetAmount() int {
 	return i.amount
 }
 
-func (i *CurrencyChangeModel) GetWantedCurrency() Domain.Currency {
+func (i *CurrencyChange) GetWantedCurrency() Domain.CurrencyInterface {
 	return i.wantedCurrency
 }
 
-func GenCurrencyChangeDomainModel(currentCurrency Domain.Currency, wantedCurrency Domain.Currency, amount int) CurrencyChangeModel {
-	return CurrencyChangeModel{amount, currentCurrency, wantedCurrency}
+func GenCurrencyChange(baseCurrency Domain.CurrencyInterface, wantedCurrency Domain.CurrencyInterface, amount int) Domain.CurrencyChangeInterface {
+	return &CurrencyChange{amount, baseCurrency, wantedCurrency}
 }
