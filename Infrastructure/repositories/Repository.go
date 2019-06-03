@@ -1,80 +1,30 @@
 package repositories
 
 import (
-	"sync"
-
 	"github.com/apmath-web/currency/Domain"
-	domainModels "github.com/apmath-web/currency/Domain/Models"
+	"log"
+	"sync"
 )
 
 type Repository struct {
-	currentRates Domain.ChangeTable
+	rates map[string]map[string]float64
 }
 
-func (repository *Repository) SetAllTable(table Domain.ChangeTable) error {
-	repository.currentRates = table
+func (repository *Repository) Set(from Domain.CurrencyInterface, to Domain.CurrencyInterface, value Domain.RateInterface) error {
+	repository.rates[from.GetName()][to.GetName()] = value.GetRate()
 	return nil
 }
 
-func (repository *Repository) GetAllTable() Domain.ChangeTable {
-	return repository.currentRates
+func (repository *Repository) Get(from Domain.CurrencyInterface, to Domain.CurrencyInterface) Domain.RateInterface {
+	return Domain.GenRate(repository.rates[from.GetName()][to.GetName()])
 }
 
-func (repository *Repository) ClearAllTable() error {
-	repository.currentRates = nil
-	return nil
-}
-
-func (repository *Repository) GetRate(currentCurrency string, wantedCurrency string) Domain.CurrencyRateInterface {
-	table := repository.GetAllTable()
-	currencies := table.GetCurrencyRates()
-	currencyRate := currencies[0]
-	for _, cRate := range currencies {
-		if cRate.GetBasedCurrency().GetName() == currentCurrency &&
-			cRate.GetWantedCurrency().GetName() == wantedCurrency {
-			currencyRate = cRate
-			break
-		}
-	}
-	return currencyRate
-}
-
-var once sync.Once
 var repo *Repository
+var once sync.Once
 
-func GenRepository() Domain.ChangeTableRepositoryInterface {
-
+func GenRepository() Domain.RepositoryInterface {
 	once.Do(func() {
-		repo = &Repository{
-			domainModels.GenChangeTableDomainModel(
-				[]Domain.CurrencyRateInterface{
-					domainModels.GenCurrencyRateDomainModel(
-						domainModels.GenCurrencyDomainModel("USD"),
-						domainModels.GenCurrencyDomainModel("EUR"),
-						0),
-					domainModels.GenCurrencyRateDomainModel(
-						domainModels.GenCurrencyDomainModel("USD"),
-						domainModels.GenCurrencyDomainModel("RUB"),
-						0),
-					domainModels.GenCurrencyRateDomainModel(
-						domainModels.GenCurrencyDomainModel("EUR"),
-						domainModels.GenCurrencyDomainModel("USD"),
-						0),
-					domainModels.GenCurrencyRateDomainModel(
-						domainModels.GenCurrencyDomainModel("EUR"),
-						domainModels.GenCurrencyDomainModel("RUB"),
-						0),
-					domainModels.GenCurrencyRateDomainModel(
-						domainModels.GenCurrencyDomainModel("RUB"),
-						domainModels.GenCurrencyDomainModel("EUR"),
-						0),
-					domainModels.GenCurrencyRateDomainModel(
-						domainModels.GenCurrencyDomainModel("RUB"),
-						domainModels.GenCurrencyDomainModel("USD"),
-						0),
-				}),
-		}
+		repo = &Repository{make(map[string]map[string]float64)}
 	})
-
 	return repo
 }
