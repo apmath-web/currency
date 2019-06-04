@@ -15,8 +15,8 @@ func (i *Fetcher) FetchAll() []Domain.FetchRateInterface {
 	res, err := http.Get(ApiUrl)
 
 	if err != nil {
-		return nil
 		log.Fatal(err)
+		return nil
 	}
 
 	defer res.Body.Close()
