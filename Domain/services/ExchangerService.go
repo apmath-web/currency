@@ -9,9 +9,12 @@ type Exchanger struct {
 	repository Domain.RepositoryInterface
 }
 
-func (instance *Exchanger) Exchange(data Domain.CurrencyChangeInterface) Domain.AmountInterface {
-	rate := instance.repository.Get(domainModels.GenCurrency(data.GetWantedCurrency()), domainModels.GenCurrency(data.GetBaseCurrency()))
-	return domainModels.GenAmount(int(float64(data.GetAmount()) * rate.GetRate()))
+func (instance *Exchanger) Exchange(data Domain.CurrencyChangeInterface) (Domain.AmountInterface, error) {
+	rate, err := instance.repository.Get(domainModels.GenCurrency(data.GetWantedCurrency()), domainModels.GenCurrency(data.GetBaseCurrency()))
+	if err != nil {
+		return nil, err
+	}
+	return domainModels.GenAmount(int(float64(data.GetAmount()) * rate.GetRate())), nil
 }
 
 func GenExchanger(repository Domain.RepositoryInterface) Domain.ExchangerInterface {
