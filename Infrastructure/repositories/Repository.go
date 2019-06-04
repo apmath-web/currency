@@ -40,9 +40,9 @@ func (repository *Repository) Get(from Domain.CurrencyInterface, to Domain.Curre
 
 func (repository *Repository) IsEmpty() bool {
 	if len(repository.rates) == 0 {
-		return false
+		return true
 	}
-	return true
+	return false
 }
 
 var repo *Repository
