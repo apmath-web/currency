@@ -13,7 +13,7 @@ type ServiceManagerClass struct {
 }
 
 func (sm *ServiceManagerClass) GetRepository() Domain.RepositoryInterface {
-	return repositories.GenRepository()
+	return GenRepository()
 }
 
 func (sm *ServiceManagerClass) GetFetcher() Domain.FetcherInterface {
@@ -38,4 +38,13 @@ func GetServiceManager() *ServiceManagerClass {
 		serviceManager = &ServiceManagerClass{}
 	})
 	return serviceManager
+}
+
+var repo *repositories.Repository
+
+func GenRepository() Domain.RepositoryInterface {
+	once.Do(func() {
+		repo = &repositories.Repository{Rates: make(map[string]map[string]float64)}
+	})
+	return repo
 }
