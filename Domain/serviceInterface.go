@@ -5,7 +5,7 @@ type UpdaterInterface interface {
 }
 
 type ExchangerInterface interface {
-	Exchange(data CurrencyChangeInterface) AmountInterface
+	Exchange(data CurrencyChangeInterface) (AmountInterface, error)
 }
 
 type FetchRateInterface interface {
