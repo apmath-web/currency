@@ -48,5 +48,5 @@ func CurrencyHandler(c *gin.Context) {
 	// 	log.Fatal(err)
 	// }
 
-	c.JSON(http.StatusCreated, gin.H{"amount": ans.GetAmount(), "currency": dm.GetWantedCurrency().GetName()})
+	c.JSON(http.StatusCreated, gin.H{"amount": ans.GetAmount(), "currency": dm.GetWantedCurrency()})
 }

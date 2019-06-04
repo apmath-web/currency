@@ -7,8 +7,8 @@ import (
 )
 
 func CurrencyMapper(vm viewModels.CurrencyViewModel) Domain.CurrencyChangeInterface {
-	currentCurrency := domainModels.GenCurrency(vm.GetCurrentCurrency())
-	wantedCurrency := domainModels.GenCurrency(vm.GetWantedCurrency())
+	currentCurrency := vm.GetCurrentCurrency()
+	wantedCurrency := vm.GetWantedCurrency()
 	amount := vm.GetAmount()
 	return domainModels.GenCurrencyChange(currentCurrency, wantedCurrency, amount)
 }
