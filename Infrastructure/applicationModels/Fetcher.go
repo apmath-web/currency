@@ -48,9 +48,7 @@ func (i *Fetcher) FetchAll() []Domain.FetchRateInterface {
 			fetchRates = append(fetchRates, GenFetchRate(j, k, m[j]/m[k]))
 		}
 	}
-
 	return fetchRates
-
 }
 
 func GenFetcher() Domain.FetcherInterface {
