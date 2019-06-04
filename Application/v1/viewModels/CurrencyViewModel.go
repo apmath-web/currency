@@ -39,6 +39,10 @@ func (c *CurrencyViewModel) MarshalJSON() (b []byte, e error) {
 }
 
 func (c *CurrencyViewModel) validateAmount() bool {
+	if c.Amount == 0 {
+		c.validation.AddMessage(validation.GenMessage("amount", "Is null"))
+		return false
+	}
 	if c.Amount < 0 {
 		c.validation.AddMessage(validation.GenMessage("amount", "Is negative"))
 		return false
