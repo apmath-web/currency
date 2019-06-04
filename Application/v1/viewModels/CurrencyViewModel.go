@@ -51,6 +51,11 @@ func (c *CurrencyViewModel) validateAmount() bool {
 }
 
 func (c *CurrencyViewModel) validateCurrency(currency string, fieldOfMessage string) bool {
+	if len(currency) == 0 {
+		c.validation.AddMessage(validation.GenMessage(fieldOfMessage, "404"+currency+"currency is not found"))
+		return false
+	}
+
 	if len(currency) != 3 {
 		c.validation.AddMessage(validation.GenMessage(fieldOfMessage, "The length of "+currency+" is not equal to 3"))
 		return false
