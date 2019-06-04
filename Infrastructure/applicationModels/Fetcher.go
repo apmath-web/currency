@@ -30,16 +30,25 @@ func (i *Fetcher) FetchAll() []Domain.FetchRateInterface {
 		log.Fatal(errOfUnmurshal)
 	}
 
+	m := make(map[string]float64)
+
 	rates := data["Valute"].(map[string]interface{})
 	var fetchRates []Domain.FetchRateInterface
+	fetchRates = append(fetchRates, GenFetchRate("RUB", "RUB", 1))
 	for key, value := range rates {
 		infoAboutCurrency := value.(map[string]interface{})
 		rate := infoAboutCurrency["Value"].(float64)
-		fetchRates = append(fetchRates, GenFetchRate(key, rate))
+		fetchRates = append(fetchRates, GenFetchRate("RUB", key, 1/rate))
+		fetchRates = append(fetchRates, GenFetchRate(key, "RUB", rate))
+		m[key] = rate
 	}
-	// for _, obj := range fetchRates {
-	// 	//fmt.Print(obj.GetCurrency(), " ", obj.GetRate(), "\n")
-	// }
+
+	for j := range m {
+		for k := range m {
+			fetchRates = append(fetchRates, GenFetchRate(j, k, m[j]/m[k]))
+		}
+	}
+
 	return fetchRates
 
 }

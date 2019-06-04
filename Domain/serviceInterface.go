@@ -9,7 +9,8 @@ type ExchangerInterface interface {
 }
 
 type FetchRateInterface interface {
-	GetCurrency() string
+	GetWantedCurrency() string
+	GetBaseCurrency() string
 	GetRate() float64
 }
 
