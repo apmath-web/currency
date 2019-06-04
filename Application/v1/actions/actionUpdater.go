@@ -18,4 +18,5 @@ func UpdaterHandler(c *gin.Context) {
 		c.String(http.StatusInternalServerError, string(str))
 		return
 	}
+	c.Status(204)
 }
