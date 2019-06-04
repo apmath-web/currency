@@ -46,30 +46,14 @@ func (c *CurrencyViewModel) validateAmount() bool {
 	return true
 }
 
-func (c *CurrencyViewModel) validateCurrentCurrency() bool {
-	if len(c.CurrentCurrency) != 3 {
-		c.validation.AddMessage(validation.GenMessage("CurrentCurrency", "Is incorrect"))
+func (c *CurrencyViewModel) validateCurrency(currency string, fieldOfMessage string) bool {
+	if len(currency) != 3 {
+		c.validation.AddMessage(validation.GenMessage(fieldOfMessage, "The length of "+currency+" is not equal to 3"))
 		return false
 	}
-
-	for _, char := range c.CurrentCurrency {
-		if !unicode.IsUpper(char) {
-			c.validation.AddMessage(validation.GenMessage("CurrentCurrency", "Is incorrect"))
-			return false
-		}
-	}
-	return true
-}
-
-func (c *CurrencyViewModel) validateWantedCurrency() bool {
-	if len(c.WantedCurrency) != 3 {
-		c.validation.AddMessage(validation.GenMessage("WantedCurrency", "Is incorrect"))
-		return false
-	}
-
-	for _, char := range c.WantedCurrency {
-		if !unicode.IsUpper(char) {
-			c.validation.AddMessage(validation.GenMessage("WantedCurrency", "Is incorrect"))
+	for i := 0; i < 3; i++ {
+		if !unicode.IsUpper(rune(currency[i])) {
+			c.validation.AddMessage(validation.GenMessage(fieldOfMessage, currency+" is not in upper case"))
 			return false
 		}
 	}
@@ -85,14 +69,8 @@ func (c *CurrencyViewModel) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-func (c *CurrencyViewModel) Hydrate(model Domain.CurrencyChangeInterface) {
-	c.Amount = model.GetAmount()
-	c.CurrentCurrency = model.GetBaseCurrency().GetName()
-	c.WantedCurrency = model.GetWantedCurrency().GetName()
-}
-
 func (c *CurrencyViewModel) Validate() bool {
-	if c.validateAmount() && c.validateCurrentCurrency() && c.validateWantedCurrency() {
+	if c.validateAmount() && c.validateCurrency(c.WantedCurrency, "wantedCurrency") && c.validateCurrency(c.CurrentCurrency, "currentCurrency") {
 		return true
 	}
 	return false

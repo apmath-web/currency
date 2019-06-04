@@ -13,7 +13,6 @@ type Repository struct {
 }
 
 func (repository *Repository) Set(from Domain.CurrencyInterface, to Domain.CurrencyInterface, value Domain.RateInterface) error {
-	//mm, ok :=repository.rates[from.GetName()][to.GetName()] = value.GetRate()
 	mm, ok := repository.rates[from.GetName()]
 
 	if !ok {

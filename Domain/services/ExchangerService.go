@@ -12,8 +12,7 @@ type Exchanger struct {
 }
 
 func (instance *Exchanger) Exchange(data Domain.CurrencyChangeInterface) Domain.AmountInterface {
-	rate := instance.repository.Get(data.GetWantedCurrency(), data.GetBaseCurrency())
-
+	rate := instance.repository.Get(domainModels.GenCurrency(data.GetWantedCurrency()), domainModels.GenCurrency(data.GetBaseCurrency()))
 	fmt.Print("FromExhanger Rate", rate)
 	return domainModels.GenAmount(int(float64(data.GetAmount()) * rate.GetRate()))
 }
