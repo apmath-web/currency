@@ -46,13 +46,14 @@ func (c *CurrencyViewModel) validateAmount() bool {
 	return true
 }
 
-func (c *CurrencyViewModel) validateCurrency(currency string) bool {
+func (c *CurrencyViewModel) validateCurrency(currency string, fieldOfMessage string) bool {
 	if len(currency) != 3 {
-		c.validation.AddMessage(validation.GenMessage("Currencies", "Are incorrect"))
+		c.validation.AddMessage(validation.GenMessage(fieldOfMessage, "The length of "+currency+" is not equal to 3"))
 		return false
 	}
 	for i := 0; i < 3; i++ {
 		if !unicode.IsUpper(rune(currency[i])) {
+			c.validation.AddMessage(validation.GenMessage(fieldOfMessage, currency+" is not in upper case"))
 			return false
 		}
 	}
@@ -69,7 +70,7 @@ func (c *CurrencyViewModel) UnmarshalJSON(b []byte) error {
 }
 
 func (c *CurrencyViewModel) Validate() bool {
-	if c.validateAmount() && c.validateCurrency(c.WantedCurrency) && c.validateCurrency(c.CurrentCurrency) {
+	if c.validateAmount() && c.validateCurrency(c.WantedCurrency, "wantedCurrency") && c.validateCurrency(c.CurrentCurrency, "currentCurrency") {
 		return true
 	}
 	return false
