@@ -12,6 +12,14 @@ import (
 )
 
 func CurrencyHandler(c *gin.Context) {
+	sm := Infrastructure.GetServiceManager()
+	if sm.GetRepository().IsEmpty() {
+		validator := validation.GenValidation()
+		validator.SetMessage("Need to be updated before")
+		str, _ := json.Marshal(validator)
+		c.String(http.StatusBadRequest, string(str))
+		return
+	}
 	vm := viewModels.CurrencyViewModel{}
 	if err := c.BindJSON(&vm); err != nil {
 		validator := validation.GenValidation()
@@ -31,8 +39,16 @@ func CurrencyHandler(c *gin.Context) {
 
 	dm := mapper.CurrencyMapper(vm)
 
-	exchanger := Infrastructure.GetServiceManager().GetExchangerService()
-	ans := exchanger.Exchange(dm)
+	exchanger := sm.GetExchangerService()
+	ans, err := exchanger.Exchange(dm)
+	if err != nil {
+		validator := validation.GenValidation()
+		validator.SetMessage("Internal error")
+		validator.AddMessage(validation.GenMessage("changing", err.Error()))
+		str, _ := json.Marshal(validator)
+		c.String(http.StatusBadRequest, string(str))
+		return
+	}
 
 	c.JSON(http.StatusCreated, gin.H{"amount": ans.GetAmount(), "currency": dm.GetWantedCurrency()})
 }

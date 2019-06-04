@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"log"
+	"errors"
 	"sync"
 
 	"github.com/apmath-web/currency/Domain"
@@ -24,18 +24,25 @@ func (repository *Repository) Set(from Domain.CurrencyInterface, to Domain.Curre
 	return nil
 }
 
-func (repository *Repository) Get(from Domain.CurrencyInterface, to Domain.CurrencyInterface) Domain.RateInterface {
+func (repository *Repository) Get(from Domain.CurrencyInterface, to Domain.CurrencyInterface) (Domain.RateInterface, error) {
 
 	_, ok := repository.rates[from.GetName()]
 	if !ok {
-		log.Fatal("Currency" + from.GetName() + " doesn't exist")
+		return nil, errors.New("Currency " + from.GetName() + " doesn't exist")
 	}
 	val2, ok2 := repository.rates[from.GetName()][to.GetName()]
 
 	if !ok2 {
-		log.Fatal("Currency " + to.GetName() + " doesn't exist")
+		return nil, errors.New("Currency " + to.GetName() + " doesn't exist")
 	}
-	return domainModels.GenRate(val2)
+	return domainModels.GenRate(val2), nil
+}
+
+func (repository *Repository) IsEmpty() bool {
+	if len(repository.rates) == 0 {
+		return true
+	}
+	return false
 }
 
 var repo *Repository

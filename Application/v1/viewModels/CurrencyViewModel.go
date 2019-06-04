@@ -39,6 +39,10 @@ func (c *CurrencyViewModel) MarshalJSON() (b []byte, e error) {
 }
 
 func (c *CurrencyViewModel) validateAmount() bool {
+	if c.Amount == 0 {
+		c.validation.AddMessage(validation.GenMessage("amount", "Is null"))
+		return false
+	}
 	if c.Amount < 0 {
 		c.validation.AddMessage(validation.GenMessage("amount", "Is negative"))
 		return false
@@ -47,6 +51,10 @@ func (c *CurrencyViewModel) validateAmount() bool {
 }
 
 func (c *CurrencyViewModel) validateCurrency(currency string, fieldOfMessage string) bool {
+	if len(currency) == 0 {
+		c.validation.AddMessage(validation.GenMessage(fieldOfMessage, "404"+currency+" is not found"))
+		return false
+	}
 	if len(currency) != 3 {
 		c.validation.AddMessage(validation.GenMessage(fieldOfMessage, "The length of "+currency+" is not equal to 3"))
 		return false
