@@ -20,7 +20,6 @@ func (instance *Updater) Update() error {
 			domainModels.GenRate(currency.GetRate()))
 	}
 
-	// instance.repository.Print()
 	return nil
 }
 

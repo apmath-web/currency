@@ -1,7 +1,6 @@
 package repositories
 
 import (
-	"fmt"
 	"sync"
 
 	"github.com/apmath-web/currency/Domain"
@@ -26,16 +25,6 @@ func (repository *Repository) Set(from Domain.CurrencyInterface, to Domain.Curre
 
 func (repository *Repository) Get(from Domain.CurrencyInterface, to Domain.CurrencyInterface) Domain.RateInterface {
 	return domainModels.GenRate(repository.rates[from.GetName()][to.GetName()])
-}
-
-func (repository *Repository) Print() {
-
-	fmt.Print("=======Print repo==========\n")
-	for k1 := range repository.rates {
-		for k2 := range repository.rates[k1] {
-			fmt.Print(k1, " ", k2, " ", repository.rates[k1][k2], "\n")
-		}
-	}
 }
 
 var repo *Repository
