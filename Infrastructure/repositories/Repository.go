@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"errors"
 	"sync"
 
 	"github.com/apmath-web/currency/Domain"
@@ -8,73 +9,48 @@ import (
 )
 
 type Repository struct {
-	currentRates Domain.ChangeTable
+	rates map[string]map[string]float64
 }
 
-func (repository *Repository) SetAllTable(table Domain.ChangeTable) error {
-	repository.currentRates = table
-	return nil
-}
+func (repository *Repository) Set(from Domain.CurrencyInterface, to Domain.CurrencyInterface, value Domain.RateInterface) error {
+	mm, ok := repository.rates[from.GetName()]
 
-func (repository *Repository) GetAllTable() Domain.ChangeTable {
-	return repository.currentRates
-}
-
-func (repository *Repository) ClearAllTable() error {
-	repository.currentRates = nil
-	return nil
-}
-
-func (repository *Repository) GetRate(currentCurrency string, wantedCurrency string) Domain.CurrencyRateInterface {
-	table := repository.GetAllTable()
-	currencies := table.GetCurrencyRates()
-	currencyRate := currencies[0]
-	for _, cRate := range currencies {
-		if cRate.GetBasedCurrency().GetName() == currentCurrency &&
-			cRate.GetWantedCurrency().GetName() == wantedCurrency {
-			currencyRate = cRate
-			break
-		}
+	if !ok {
+		mm = make(map[string]float64)
+		repository.rates[from.GetName()] = mm
 	}
-	return currencyRate
+
+	repository.rates[from.GetName()][to.GetName()] = value.GetRate()
+	return nil
 }
 
-var once sync.Once
+func (repository *Repository) Get(from Domain.CurrencyInterface, to Domain.CurrencyInterface) (Domain.RateInterface, error) {
+
+	_, ok := repository.rates[from.GetName()]
+	if !ok {
+		return nil, errors.New("Currency " + from.GetName() + " doesn't exist")
+	}
+	val2, ok2 := repository.rates[from.GetName()][to.GetName()]
+
+	if !ok2 {
+		return nil, errors.New("Currency " + to.GetName() + " doesn't exist")
+	}
+	return domainModels.GenRate(val2), nil
+}
+
+func (repository *Repository) IsEmpty() bool {
+	if len(repository.rates) == 0 {
+		return true
+	}
+	return false
+}
+
 var repo *Repository
+var once sync.Once
 
-func GenRepository() Domain.ChangeTableRepositoryInterface {
-
+func GenRepository() Domain.RepositoryInterface {
 	once.Do(func() {
-		repo = &Repository{
-			domainModels.GenChangeTableDomainModel(
-				[]Domain.CurrencyRateInterface{
-					domainModels.GenCurrencyRateDomainModel(
-						domainModels.GenCurrencyDomainModel("USD"),
-						domainModels.GenCurrencyDomainModel("EUR"),
-						0),
-					domainModels.GenCurrencyRateDomainModel(
-						domainModels.GenCurrencyDomainModel("USD"),
-						domainModels.GenCurrencyDomainModel("RUB"),
-						0),
-					domainModels.GenCurrencyRateDomainModel(
-						domainModels.GenCurrencyDomainModel("EUR"),
-						domainModels.GenCurrencyDomainModel("USD"),
-						0),
-					domainModels.GenCurrencyRateDomainModel(
-						domainModels.GenCurrencyDomainModel("EUR"),
-						domainModels.GenCurrencyDomainModel("RUB"),
-						0),
-					domainModels.GenCurrencyRateDomainModel(
-						domainModels.GenCurrencyDomainModel("RUB"),
-						domainModels.GenCurrencyDomainModel("EUR"),
-						0),
-					domainModels.GenCurrencyRateDomainModel(
-						domainModels.GenCurrencyDomainModel("RUB"),
-						domainModels.GenCurrencyDomainModel("USD"),
-						0),
-				}),
-		}
+		repo = &Repository{make(map[string]map[string]float64)}
 	})
-
 	return repo
 }

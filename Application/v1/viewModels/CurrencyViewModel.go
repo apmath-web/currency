@@ -2,6 +2,7 @@ package viewModels
 
 import (
 	"encoding/json"
+	"unicode"
 
 	"github.com/apmath-web/currency/Application/v1/validation"
 	"github.com/apmath-web/currency/Domain"
@@ -38,6 +39,10 @@ func (c *CurrencyViewModel) MarshalJSON() (b []byte, e error) {
 }
 
 func (c *CurrencyViewModel) validateAmount() bool {
+	if c.Amount == 0 {
+		c.validation.AddMessage(validation.GenMessage("amount", "Is null"))
+		return false
+	}
 	if c.Amount < 0 {
 		c.validation.AddMessage(validation.GenMessage("amount", "Is negative"))
 		return false
@@ -45,24 +50,22 @@ func (c *CurrencyViewModel) validateAmount() bool {
 	return true
 }
 
-func (c *CurrencyViewModel) validateCurrentCurrency() bool {
-	for _, cc := range Domain.Currencies {
-		if cc == c.CurrentCurrency {
-			return true
+func (c *CurrencyViewModel) validateCurrency(currency string, fieldOfMessage string) bool {
+	if len(currency) == 0 {
+		c.validation.AddMessage(validation.GenMessage(fieldOfMessage, "404"+currency+" is not found"))
+		return false
+	}
+	if len(currency) != 3 {
+		c.validation.AddMessage(validation.GenMessage(fieldOfMessage, "The length of "+currency+" is not equal to 3"))
+		return false
+	}
+	for i := 0; i < 3; i++ {
+		if !unicode.IsUpper(rune(currency[i])) {
+			c.validation.AddMessage(validation.GenMessage(fieldOfMessage, currency+" is not in upper case"))
+			return false
 		}
 	}
-	c.validation.AddMessage(validation.GenMessage("CurrentCurrency", "Is incorrect"))
-	return false
-}
-
-func (c *CurrencyViewModel) validateWantedCurrency() bool {
-	for _, cc := range Domain.Currencies {
-		if cc == c.CurrentCurrency {
-			return true
-		}
-	}
-	c.validation.AddMessage(validation.GenMessage("WantedCurrency", "Is incorrect"))
-	return false
+	return true
 }
 
 func (c *CurrencyViewModel) UnmarshalJSON(b []byte) error {
@@ -74,14 +77,8 @@ func (c *CurrencyViewModel) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-func (c *CurrencyViewModel) Hydrate(model Domain.CurrencyChange) {
-	c.Amount = model.GetAmount()
-	c.CurrentCurrency = model.GetCurrentCurrency().GetName()
-	c.WantedCurrency = model.GetWantedCurrency().GetName()
-}
-
 func (c *CurrencyViewModel) Validate() bool {
-	if c.validateAmount() && c.validateCurrentCurrency() && c.validateWantedCurrency() {
+	if c.validateAmount() && c.validateCurrency(c.WantedCurrency, "wantedCurrency") && c.validateCurrency(c.CurrentCurrency, "currentCurrency") {
 		return true
 	}
 	return false

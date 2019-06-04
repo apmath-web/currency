@@ -4,16 +4,22 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/apmath-web/currency/Application/v1/mapper"
 	"github.com/apmath-web/currency/Application/v1/validation"
 	"github.com/apmath-web/currency/Application/v1/viewModels"
+	"github.com/apmath-web/currency/Infrastructure"
 	"github.com/gin-gonic/gin"
 )
 
 func CurrencyHandler(c *gin.Context) {
-	// currentCurrency, err := strconv.Atoi(c.Param("currentCurrency"))
-	// wantedCurrency, err := strconv.Atoi(c.Param("wantedCurrency"))
-	// amount := c.Param("amount")
-
+	sm := Infrastructure.GetServiceManager()
+	if sm.GetRepository().IsEmpty() {
+		validator := validation.GenValidation()
+		validator.SetMessage("Need to be updated before")
+		str, _ := json.Marshal(validator)
+		c.String(http.StatusBadRequest, string(str))
+		return
+	}
 	vm := viewModels.CurrencyViewModel{}
 	if err := c.BindJSON(&vm); err != nil {
 		validator := validation.GenValidation()
@@ -31,4 +37,18 @@ func CurrencyHandler(c *gin.Context) {
 		return
 	}
 
+	dm := mapper.CurrencyMapper(vm)
+
+	exchanger := sm.GetExchangerService()
+	ans, err := exchanger.Exchange(dm)
+	if err != nil {
+		validator := validation.GenValidation()
+		validator.SetMessage("Internal error")
+		validator.AddMessage(validation.GenMessage("changing", err.Error()))
+		str, _ := json.Marshal(validator)
+		c.String(http.StatusBadRequest, string(str))
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{"amount": ans.GetAmount(), "currency": dm.GetWantedCurrency()})
 }

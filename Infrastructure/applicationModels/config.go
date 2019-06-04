@@ -1,3 +1,3 @@
 package applicationModels
 
-const ApiUrl = "https://api.exchangeratesapi.io/latest?"
+const ApiUrl = "https://www.cbr-xml-daily.ru/daily_json.js"
