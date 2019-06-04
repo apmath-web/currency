@@ -40,7 +40,15 @@ func CurrencyHandler(c *gin.Context) {
 	dm := mapper.CurrencyMapper(vm)
 
 	exchanger := sm.GetExchangerService()
-	ans := exchanger.Exchange(dm)
+	ans, err := exchanger.Exchange(dm)
+	if err != nil {
+		validator := validation.GenValidation()
+		validator.SetMessage("Internal error")
+		validator.AddMessage(validation.GenMessage("changing", err.Error()))
+		str, _ := json.Marshal(validator)
+		c.String(http.StatusBadRequest, string(str))
+		return
+	}
 
 	c.JSON(http.StatusCreated, gin.H{"amount": ans.GetAmount(), "currency": dm.GetWantedCurrency()})
 }
