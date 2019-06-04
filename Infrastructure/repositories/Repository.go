@@ -38,6 +38,13 @@ func (repository *Repository) Get(from Domain.CurrencyInterface, to Domain.Curre
 	return domainModels.GenRate(val2)
 }
 
+func (repository *Repository) IsEmpty() bool {
+	if len(repository.rates) == 0 {
+		return false
+	}
+	return true
+}
+
 var repo *Repository
 var once sync.Once
 
